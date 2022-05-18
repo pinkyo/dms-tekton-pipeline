@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1beta1
+kind: ClusterTask
+metadata:
+  name: dms-test-task
+spec:
+  description: test task for dms
+  params:
+    - default: deploy/demo.json
+      name: deployConfigPath
+      type: string
+    - default: test
+      name: env
+      type: string
+    - default: sg
+      name: cid
+      type: string
+    - default: ''
+      name: fte_name
+      type: string
+    - default: 'true'
+      name: push
+      type: string
+    - default: 'false'
+      name: build_common
+      type: string
+  steps:
+    - args: ["10"]
+      command: ["sleep"]
+      image: 'harbor.shopeemobile.com/devops-sz/k8s-deploy:native'
+      imagePullPolicy: Always
+      name: build-push
+      resources:
+        limits:
+          cpu: 500m
+          memory: 500Mi
+        requests:
+          cpu: 100m
+          memory: 100Mi
