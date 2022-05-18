@@ -1,0 +1,48 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: dms-test-pipeline
+  namespace: supply-chain-group-pipeline
+spec:
+  params:
+    - default: deploy/demo.json
+      name: deployConfigPath
+      type: string
+    - default: test
+      name: env
+      type: string
+    - default: ''
+      name: target_cluster
+      type: string
+    - default: 'false'
+      name: canary_enable
+      type: string
+    - default: '1'
+      name: canary_replicas
+      type: string
+    - default: 'false'
+      name: canary_rollback
+      type: string
+    - default: 'false'
+      name: canary_release
+      type: string
+    - default: br
+      name: cid
+      type: string
+  resources:
+    - name: git-repo
+      type: git
+  tasks:
+    - name: dms-test-task-ins
+      params:
+        - name: deployConfigPath
+          value: $(params.deployConfigPath)
+        - name: env
+          value: $(params.env)
+        - name: cid
+          value: $(params.cid)
+        - name: fte_name
+          value: ''
+      taskRef:
+        kind: ClusterTask
+        name: dms-test-task
