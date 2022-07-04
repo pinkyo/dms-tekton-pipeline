@@ -43,6 +43,10 @@ spec:
           value: $(params.cid)
         - name: fte_name
           value: ''
+      resources:
+        inputs:
+          - name: git-repo
+            resource: git-repo
       taskRef:
         kind: ClusterTask
         name: dms-test-task
