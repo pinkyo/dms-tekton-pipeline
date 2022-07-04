@@ -23,6 +23,11 @@ spec:
     - default: 'false'
       name: build_common
       type: string
+  resources:
+    inputs:
+      - name: git-repo
+        targetPath: /data
+        type: git
   steps:
     - args: ["10"]
       command: ["sleep"]
